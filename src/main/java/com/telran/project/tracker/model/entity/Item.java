@@ -32,9 +32,9 @@ public class Item {
     @Convert(converter = ItemStatusConverter.class)
     private ItemStatus itemStatus;
 
-    @JoinColumn(name = "USER_ID")
+    @JoinColumn(name = "PROJECT_USER_ID")
     @ManyToOne
-    private User user;
+    private ProjectUser projectUser;
 
     @CreationTimestamp
     private Date createdDate;

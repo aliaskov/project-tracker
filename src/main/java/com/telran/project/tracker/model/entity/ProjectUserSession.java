@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Builder
 
 @Entity
-@Table(name = "USER_SESSION")
-public class UserSession {
+@Table(name = "PROJECT_USER_SESSION")
+public class ProjectUserSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class UserSession {
     private Boolean isValid;
 
     @OneToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @JoinColumn(name = "PROJECT_USER_ID")
+    private ProjectUser projectUser;
 
 }

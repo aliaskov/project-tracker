@@ -3,11 +3,11 @@ package com.telran.project.tracker.controller;
 import com.telran.project.tracker.exception.ItemNotFoundException;
 import com.telran.project.tracker.model.entity.Item;
 import com.telran.project.tracker.model.entity.ItemStatus;
-import com.telran.project.tracker.model.entity.User;
+import com.telran.project.tracker.model.entity.ProjectUser;
 import com.telran.project.tracker.model.web.ItemRequest;
 import com.telran.project.tracker.model.web.ItemResponse;
 import com.telran.project.tracker.repository.ItemRepository;
-import com.telran.project.tracker.repository.UserRepository;
+import com.telran.project.tracker.repository.ProjectUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,18 +24,18 @@ public class ItemController {
     private ItemRepository itemRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private ProjectUserRepository userRepository;
 
     @PostMapping("/create")
     public ItemResponse createItem(@RequestBody ItemRequest itemRequest, Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
+        ProjectUser projectUser = userRepository.findByUsername(principal.getName());
 
         Item item = Item.builder()
                 .itemName(itemRequest.getItemName())
                 .itemType(itemRequest.getItemType())
                 .itemStatus(ItemStatus.TODO)
                 .createdDate(new Date())
-                .user(user)
+                .projectUser(projectUser)
                 .build();
 
         return new ItemResponse(itemRepository.save(item));
@@ -74,8 +74,8 @@ public class ItemController {
 
     @GetMapping("/all/me")
     public List<ItemResponse> getMyItems(Principal principal) {
-        User user = userRepository.findByUsername(principal.getName());
-        return itemRepository.findAllByUser(user)
+        ProjectUser projectUser = userRepository.findByUsername(principal.getName());
+        return itemRepository.findAllByProjectUser(projectUser)
                 .stream()
                 .map(ItemResponse::new)
                 .collect(Collectors.toList());

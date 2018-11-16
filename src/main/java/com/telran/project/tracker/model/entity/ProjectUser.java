@@ -12,8 +12,8 @@ import java.security.Principal;
 @Builder
 
 @Entity
-@Table(name = "USER")
-public class User implements Principal {
+@Table(name = "PROJECT_USER")
+public class ProjectUser implements Principal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

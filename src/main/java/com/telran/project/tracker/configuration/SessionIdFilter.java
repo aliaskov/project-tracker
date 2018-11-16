@@ -1,7 +1,7 @@
 package com.telran.project.tracker.configuration;
 
-import com.telran.project.tracker.model.entity.UserSession;
-import com.telran.project.tracker.repository.UserSessionRepository;
+import com.telran.project.tracker.model.entity.ProjectUserSession;
+import com.telran.project.tracker.repository.ProjectUserSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +18,7 @@ import java.util.Collections;
 public class SessionIdFilter extends OncePerRequestFilter {
 
     @Autowired
-    private UserSessionRepository userSessionRepository;
+    private ProjectUserSessionRepository projectUserSessionRepository;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest,
@@ -26,11 +26,11 @@ public class SessionIdFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         String header = httpServletRequest.getHeader("Authorization");
         if (header != null) {
-            UserSession userSession = userSessionRepository.findBySessionIdAndIsValidTrue(header);
-            if (userSession != null) {
+            ProjectUserSession projectUserSession = projectUserSessionRepository.findBySessionIdAndIsValidTrue(header);
+            if (projectUserSession != null) {
 
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                        userSession.getUser(),
+                        projectUserSession.getProjectUser(),
                         null,
                         Collections.emptyList());
 

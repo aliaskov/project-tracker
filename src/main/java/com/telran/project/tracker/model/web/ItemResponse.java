@@ -35,6 +35,6 @@ public class ItemResponse {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
 
-        this.createdBy = item.getUser().getUsername();
+        this.createdBy = item.getProjectUser().getUsername();
     }
 }

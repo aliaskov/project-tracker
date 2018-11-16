@@ -7,8 +7,8 @@
 
 
     <changeSet author="edward" id="1">
-        <createTable tableName="USER">
-            <column name="ID" type="INT(10)" autoIncrement="true">
+        <createTable tableName="PROJECT_USER">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="USERNAME" type="VARCHAR(50)">
@@ -28,9 +28,9 @@
 
 
 
-        <createTable tableName="USER_SESSION">
+        <createTable tableName="PROJECT_USER_SESSION">
 
-            <column name="ID" type="INT(10)" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
 
@@ -42,14 +42,14 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="USER_ID" type="INT(10)">
-                <constraints nullable="false" references="USER(ID)" foreignKeyName="FK_USER_SESSION_USER_ID_USER_ID"/>
+            <column name="PROJECT_USER_ID" type="INT(10)">
+                <constraints nullable="false" references="PROJECT_USER(ID)" foreignKeyName="FK_PROJECT_USER_SESSION_PROJECT_USER_ID_PROJECT_USER_ID"/>
             </column>
 
         </createTable>
 
         <createTable tableName="ITEM">
-            <column name="ID" type="INT(10)" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="ITEM_NAME" type="VARCHAR(255)">
@@ -61,8 +61,8 @@
             <column name="ITEM_STATUS_ID" type="int">
                 <constraints nullable="false"/>
             </column>
-            <column name="USER_ID" type="INT(10)">
-                <constraints nullable="false" references="USER(ID)" foreignKeyName="FK_ITEM_USER_ID_USER_ID"/>
+            <column name="PROJECT_USER_ID" type="INT(10)">
+                <constraints nullable="false" references="PROJECT_USER(ID)" foreignKeyName="FK_ITEM_PROJECT_USER_ID_PROJECT_USER_ID"/>
             </column>
 
             <column name="CREATED_DATE" type="java.util.Date">
