@@ -1,23 +1,60 @@
+#docker-compose version
 version: '3.3'
 
+#Services we configure to run
 services:
+
+# Database service name.
+# This name is used to refer this "service" inside of this docker-compose.yml configuration file
+# When docker-compose will be started, db container will be visible to other containers of this file by name "db"
   db:
+
+#   By this name db container will be accessible, using docker commands, intead of container name,
+#   like, docker logs -f db
     container_name: db
+
+#    Image, we want to build container from
     image: mysql:5.7
+
+#   Environment variables we pass inside of the container, like JAVA_HOME
     environment:
       - MYSQL_ROOT_PASSWORD=r00t
+
+#   Ports we want to bind our container with host OS
     ports:
       - "3306:3306"
-  project-tracker:
+
+# Java application service name.
+# This name is used to refer this "service" inside of this docker-compose.yml configuration file
+# When docker-compose will be started, web container will be visible to other containers of this file by name "web"
+  web:
+
+#   By this name "web" container will be accessible, using docker commands, instead of container name,
+#   like: docker logs -f db
+    container_name: web
+
+#   We define, how we want to build our container.
+#   Here, we are providing configuration to build, using Dockerfile
     build:
+
+#     Dockerfile location
       dockerfile: Dockerfile
+
+#     Dockerfile context. Like "working directory" or "workspace" of Dockerfile.
+#     This configuration provides so-called "base path" for Dockerfile
       context: .
+
+#   Ports we want to bind our container with host OS
     ports:
-      - "8080:8080"
+    - "8080:8080"
+
+#   Environment variables we pass inside of the container, like JAVA_HOME
     environment:
-      - MYSQL_ROOT_PASSWORD=r00t
-      - MYSQL_ROOT_USERNAME=root
-      - START_DELAY=2000
-    container_name: project-tracker
+    - MYSQL_ROOT_PASSWORD=r00t
+    - MYSQL_ROOT_USERNAME=root
+    - START_DELAY=20000
+
+#   This container (web) will start only, after "db" starts.
+#   There is no reason to start web, if db is not started
     depends_on:
       - db
