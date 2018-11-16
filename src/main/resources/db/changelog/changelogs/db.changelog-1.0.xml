@@ -8,7 +8,7 @@
 
     <changeSet author="edward" id="1">
         <createTable tableName="PROJECT_USER">
-            <column name="ID" type="BIGINT" autoIncrement="true">
+            <column name="ID" type="INT(10)" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="USERNAME" type="VARCHAR(50)">
@@ -30,7 +30,7 @@
 
         <createTable tableName="PROJECT_USER_SESSION">
 
-            <column name="ID" type="BIGINT" autoIncrement="true">
+            <column name="ID" type="INT(10)" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
 
@@ -43,13 +43,13 @@
             </column>
 
             <column name="PROJECT_USER_ID" type="INT(10)">
-                <constraints nullable="false" references="PROJECT_USER(ID)" foreignKeyName="FK_PROJECT_USER_SESSION_PROJECT_USER_ID_PROJECT_USER_ID"/>
+                <constraints nullable="false" references="PROJECT_USER(ID)" foreignKeyName="FK_PROJECT_USER_SESSION_PROJECT_USER_ID_PROJECT_USER_ID" deleteCascade="false"/>
             </column>
 
         </createTable>
 
         <createTable tableName="ITEM">
-            <column name="ID" type="BIGINT" autoIncrement="true">
+            <column name="ID" type="INT(10)" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
             <column name="ITEM_NAME" type="VARCHAR(255)">

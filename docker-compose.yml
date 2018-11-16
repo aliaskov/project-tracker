@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=r00t
+    ports:
+      - "3306:3306"
+  project-tracker:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - MYSQL_ROOT_PASSWORD=r00t
+      - MYSQL_ROOT_USERNAME=root
+      - START_DELAY=2000
+    container_name: project-tracker
+    depends_on:
+      - db
